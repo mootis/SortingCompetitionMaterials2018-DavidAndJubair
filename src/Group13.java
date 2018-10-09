@@ -10,15 +10,18 @@ import java.util.Comparator;
 import java.util.Scanner;
 import java.util.List;
 
-public class Group13 {
+public class Group13
+{
 
+    // To compile:
+    // javac Group13.java
     // To run use terminal with form:
     // java Group13 ../data0.txt ../out0.txt
 
     public static void main(String[] args) throws InterruptedException, FileNotFoundException,IOException {
+
         // testing the comparator:
         Data.testM_LRMUS();
-
 
         if (args.length < 2) {
             System.out.println("Please run with two command line arguments: input and output file names");
@@ -35,26 +38,23 @@ public class Group13 {
         //System.out.println("First is ->"+data[0]+"<-");
         //      printArray(data, 10);
 
+        String [] toSort = data.clone();
+
         //System.out.println("Beginning sort...");
-        //Data [] sorted = sort(toSort);
+        Data [] sorted = sort(toSort);
         //System.out.println("done");
 
-        String [] toSort = data.clone();
+
+        toSort = data.clone();
 
         Thread.sleep(10); //to let other things finish before timing; adds stability of runs
 
         long start = System.currentTimeMillis();
 
-        //sorted = sort(toSort);
-        System.out.println(toSort[0]);
-        //System.out.println(Arrays.toString(toSort));
-
-        // This line is causing a ArrayIndexOutOfBoundsException of 10000
-        Data [] sorted = quicksort(toSort, 0, toSort.length);
+        sorted = sort(toSort);
 
         long end = System.currentTimeMillis();
 
-        //System.out.println("This is the time it took to run.");
         System.out.println(end - start + " ms");
         //System.out.print("\tExporting sorted data to "+outFileName+"...");
         writeOutResult(sorted, outFileName);
@@ -67,51 +67,6 @@ public class Group13 {
     // Note: you may change the return type of the method.
     // You would need to provide your own function that prints your sorted array to
     // a file in the exact same format that my program outputs
-
-    // Our quicksort implementation
-
-    public static Data[] quicksort(String[] quickArray, int start, int end){
-        if (start < end){
-            int q = partition(quickArray, start, end);
-            quicksort(quickArray, start, q-1);
-            quicksort(quickArray, q+1, end);
-        }
-        return null;
-    }
-
-    public static int partition(String[] partArray, int start, int end){
-        String x = partArray[end];
-        int i = start - 1;
-
-        for (int count = start; count <= end - 1; count++){
-            if (partArray[count].compareTo(x) <= 0){
-                i++;
-                exchange(i, count, partArray);
-            }
-        }
-
-        exchange(i+1, end, partArray);
-
-        return i+1;
-    }
-
-    public static boolean isSorted(String[] boolArray){
-        for (int i = 1; i < boolArray.length; i++){
-            if (boolArray[i-1].compareTo(boolArray[i]) == 1){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // Exchange - swap two elements in an array
-    public static void exchange(int arrayPositionOne, int arrayPositionTwo, String[] Array){
-        String temp = Array[arrayPositionOne];
-        Array[arrayPositionOne] = Array[arrayPositionTwo];
-        Array[arrayPositionTwo] = temp;
-    }
-
-    // Quicksort for arrays of primitives and merge sort for arrays of objects - In this case we use merge sort as this is an array of type String
 
     private static Data[] sort(String[] toSort) {
         Data[] toSortData = new Data[toSort.length];
@@ -136,13 +91,15 @@ public class Group13 {
         //List<String> input = FileUtils.readLines(new File(inFile));
         List<String> input = Files.readAllLines(Paths.get(inFile));
 
+
                 /*Scanner in = new Scanner(new File(inFile));
+
                 while(in.hasNext()) {
                         input.add(in.next());
                 }
+
                 in.close();
                 */
-
         // the string array is passed just so that the correct type can be created
         return input.toArray(new String[0]);
     }
@@ -162,19 +119,19 @@ public class Group13 {
         @Override
         public int compare(Data s1, Data s2) {
 
-                        /* Length test */
+            /* Length test */
             if(s1.M_LRMUSLength() < s2.M_LRMUSLength()){return -1;}
             if(s1.M_LRMUSLength() > s2.M_LRMUSLength()){return 1;}
 
-                        /* Position test*/
+            /* Position test*/
             if(s1.M_LRMUSPosition() < s2.M_LRMUSPosition()){return -1;}
             if(s1.M_LRMUSPosition() > s2.M_LRMUSPosition()){return 1;}
 
-                        /* Alphabetical test */
+            /* Alphabetical test */
             int tmp = s1.M_LRMUSStr().compareTo(s2.M_LRMUSStr()); // NOTE:  This typically returns values outside the set {-1,0,1}, but the sign still determines ordering
             if(tmp!=0){return(tmp);}
 
-                        /* Fallback */
+            /* Fallback */
             return(s1.value().compareTo(s2.value())); //This too.
         }
     }
