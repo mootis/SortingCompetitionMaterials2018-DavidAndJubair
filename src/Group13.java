@@ -28,16 +28,7 @@ public class Group13 {
         String inputFileName = args[0];
         String outFileName = args[1];
 
-        // read as strings
-        //System.out.print("Importing data from "+inputFileName+"...");
         String [] data = readData(inputFileName);
-        //System.out.println("done");
-        //System.out.println("First is ->"+data[0]+"<-");
-        //      printArray(data, 10);
-
-        //System.out.println("Beginning sort...");
-        //Data [] sorted = sort(toSort);
-        //System.out.println("done");
 
         String [] toSort = data.clone();
 
@@ -45,30 +36,15 @@ public class Group13 {
 
         long start = System.currentTimeMillis();
 
-        //sorted = sort(toSort);
-        System.out.println(toSort[0]);
-        //System.out.println(Arrays.toString(toSort));
-
         // This line is causing a ArrayIndexOutOfBoundsException of 10000
-        Data [] sorted = quicksort(toSort, 0, toSort.length);
+        Data[] sorted = quicksort(toSort, 0, toSort.length-1);
 
         long end = System.currentTimeMillis();
 
-        //System.out.println("This is the time it took to run.");
         System.out.println(end - start + " ms");
-        //System.out.print("\tExporting sorted data to "+outFileName+"...");
         writeOutResult(sorted, outFileName);
-        //System.out.println("done!");
 
     }
-
-    // YOUR SORTING METHOD GOES HERE.
-    // You may call other methods and use other classes.
-    // Note: you may change the return type of the method.
-    // You would need to provide your own function that prints your sorted array to
-    // a file in the exact same format that my program outputs
-
-    // Our quicksort implementation
 
     public static Data[] quicksort(String[] quickArray, int start, int end){
         if (start < end){
@@ -77,6 +53,7 @@ public class Group13 {
             quicksort(quickArray, q+1, end);
         }
         return null;
+        //return quicksort(quickArray, start, end);
     }
 
     public static int partition(String[] partArray, int start, int end){
@@ -95,15 +72,6 @@ public class Group13 {
         return i+1;
     }
 
-    public static boolean isSorted(String[] boolArray){
-        for (int i = 1; i < boolArray.length; i++){
-            if (boolArray[i-1].compareTo(boolArray[i]) == 1){
-                return false;
-            }
-        }
-        return true;
-    }
-
     // Exchange - swap two elements in an array
     public static void exchange(int arrayPositionOne, int arrayPositionTwo, String[] Array){
         String temp = Array[arrayPositionOne];
@@ -112,23 +80,6 @@ public class Group13 {
     }
 
     // Quicksort for arrays of primitives and merge sort for arrays of objects - In this case we use merge sort as this is an array of type String
-
-    private static Data[] sort(String[] toSort) {
-        Data[] toSortData = new Data[toSort.length];
-        //System.out.print("\tBeginning Initialization...");
-        for (int i = 0; i < toSort.length; ++i) {
-            toSortData[i] = new Data(toSort[i]);
-        }
-        //System.out.println("done!");
-        Arrays.sort(toSortData, new M_LRMUSComparator());
-        return toSortData;
-    }
-
-    private static void printArray(String[] Arr, int n) {
-        for(int i = 0; i < n; i++) {
-            System.out.println(Arr[i]);
-        }
-    }
 
     private static String[] readData(String inFile) throws FileNotFoundException,IOException {
         //ArrayList<String> input = new ArrayList<>();
