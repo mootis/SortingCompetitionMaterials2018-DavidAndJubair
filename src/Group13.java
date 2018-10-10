@@ -41,9 +41,11 @@ public class Group13
         String [] toSort = data.clone();
 
         //System.out.println("Beginning sort...");
-        Data [] sorted = sort(toSort);
-        //System.out.println("done");
 
+        // ! Data [] sorted = sort(toSort);
+        Data [] sorted = quicksort(toSort, 0, toSort.length);
+
+        //System.out.println("done");
 
         toSort = data.clone();
 
@@ -51,13 +53,17 @@ public class Group13
 
         long start = System.currentTimeMillis();
 
-        sorted = sort(toSort);
+        // ! sorted = sort(toSort);
+
 
         long end = System.currentTimeMillis();
 
         System.out.println(end - start + " ms");
         //System.out.print("\tExporting sorted data to "+outFileName+"...");
-        writeOutResult(sorted, outFileName);
+
+        //! writeOutResult(sorted, outFileName);
+
+
         //System.out.println("done!");
 
     }
@@ -68,6 +74,35 @@ public class Group13
     // You would need to provide your own function that prints your sorted array to
     // a file in the exact same format that my program outputs
 
+    public static void quicksort(TestInteger[] quickArray, int start, int end){
+        if (start < end){
+            int q = partition(quickArray, start, end);
+            quicksort(quickArray, start, q-1);
+            quicksort(quickArray, q+1, end);
+        }
+    }
+
+    public static int partition(TestInteger[] partArray, int start, int end){
+        TestInteger x = partArray[end];
+        int i = start - 1;
+
+        for (int count = start; count <= end - 1; count++){
+            if (partArray[count].compareTo(x) <= 0){
+                i++;
+                exchange(i, count, partArray);
+            }
+        }
+        exchange(i+1, end, partArray);
+
+        return i+1;
+    }
+
+    public static void exchange(int arrayPositionOne, int arrayPositionTwo, TestInteger[] Array){
+        TestInteger temp = Array[arrayPositionOne];
+        Array[arrayPositionOne] = Array[arrayPositionTwo];
+        Array[arrayPositionTwo] = temp;
+    }
+/*
     private static Data[] sort(String[] toSort) {
         Data[] toSortData = new Data[toSort.length];
         //System.out.print("\tBeginning Initialization...");
@@ -78,7 +113,7 @@ public class Group13
         Arrays.sort(toSortData, new M_LRMUSComparator());
         return toSortData;
     }
-
+*/
     private static void printArray(String[] Arr, int n) {
         for(int i = 0; i < n; i++) {
             System.out.println(Arr[i]);
