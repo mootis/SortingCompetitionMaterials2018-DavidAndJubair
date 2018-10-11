@@ -16,10 +16,6 @@ public class Group13 {
     // java Group13 ../data0.txt ../out0.txt
 
     public static void main(String[] args) throws InterruptedException, FileNotFoundException,IOException {
-        // testing the comparator:
-        Data.testM_LRMUS();
-
-
         if (args.length < 2) {
             System.out.println("Please run with two command line arguments: input and output file names");
             System.exit(0);
@@ -38,8 +34,6 @@ public class Group13 {
         }
 
         Thread.sleep(10); //to let other things finish before timing; adds stability of runs
-
-        Data[] sorted = new Data[toSort.length];
 
         long start = System.currentTimeMillis();
 
