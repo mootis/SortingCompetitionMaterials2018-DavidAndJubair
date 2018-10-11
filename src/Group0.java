@@ -30,7 +30,7 @@ public class Group0 {
                 String [] data = readData(inputFileName);
                 //System.out.println("done");
                 //System.out.println("First is ->"+data[0]+"<-");
-        //      printArray(data, 10);
+                //      printArray(data, 10);
 
                 String [] toSort = data.clone();
 
@@ -85,11 +85,9 @@ public class Group0 {
 
 
                 /*Scanner in = new Scanner(new File(inFile));
-
                 while(in.hasNext()) {
                         input.add(in.next());
                 }
-
                 in.close();
                 */
                 // the string array is passed just so that the correct type can be created
@@ -169,9 +167,9 @@ public class Group0 {
                                 }
                         }
                         public void findBest(){
-                 for(int i =0; i< referenceStr.length();i++){
-                   updateAt(i); //
-                     }
+                                for(int i =0; i< referenceStr.length();i++){
+                                        updateAt(i); //
+                                }
                         }
                         public String getLRMUS() {
                                 if(referenceStr==null) {

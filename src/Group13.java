@@ -32,57 +32,43 @@ public class Group13 {
 
         String [] toSort = data.clone();
 
+        Data[] toSortData = new Data[toSort.length];
+        for (int i = 0; i < toSort.length; ++i) {
+            toSortData[i] = new Data(toSort[i]);
+        }
+
         Thread.sleep(10); //to let other things finish before timing; adds stability of runs
 
         Data[] sorted = new Data[toSort.length];
+
         long start = System.currentTimeMillis();
 
-        sorted = sort(toSort);
-        // This line is causing a ArrayIndexOutOfBoundsException of 10000
-        // Data[] sorted = quicksort(toSort, 0, toSort.length-1);
-        //quicksort(toSort, 0, toSort.length -1);
+        quicksort(toSortData, 0, toSort.length -1);
 
         long end = System.currentTimeMillis();
 
         System.out.println(end - start + " ms");
-        writeOutResult(sorted, outFileName);
+        writeOutResult(toSortData, outFileName);
 
-    }
-
-    private static Data[] sort(String[] toSort) {
-        Data[] toSortData = new Data[toSort.length];
-        //System.out.print("\tBeginning Initialization...");
-        for (int i = 0; i < toSort.length; ++i) {
-            toSortData[i] = new Data(toSort[i]);
-        }
-        //System.out.println("done!");
-        Arrays.sort(toSortData, new M_LRMUSComparator());
-        return toSortData;
     }
 
     // Attempted quicksort implementation
-    // Ran into issue with either
-        // A - returning a data[] in a meaningful way
-        // B - returning void and having main deal with writeOutResult correctly
-            // Tried to modify writeOutResult to be able to take in a String[] rather than a Data[] to get around this
-            // Tried working upstream in main and functions used in sorting to accept Data[] instead of String[] but could not find a solution
+    // Current issue is sorts but only line by line. Does not consider the LRMUS
 
-    public static void quicksort(String[] quickArray, int start, int end){
+    public static void quicksort(Data[] quickArray, int start, int end){
         if (start < end){
             int q = partition(quickArray, start, end);
             quicksort(quickArray, start, q-1);
             quicksort(quickArray, q+1, end);
         }
-        //return null;
-        //return quicksort(quickArray, start, end);
     }
 
-    public static int partition(String[] partArray, int start, int end){
-        String x = partArray[end];
+    public static int partition(Data[] partArray, int start, int end){
+        Data x = partArray[end];
         int i = start - 1;
 
         for (int count = start; count <= end - 1; count++){
-            if (partArray[count].compareTo(x) <= 0){
+            if (partArray[count].value().compareTo(x.value()) <= 0){
                 i++;
                 exchange(i, count, partArray);
             }
@@ -94,8 +80,8 @@ public class Group13 {
     }
 
     // Exchange - swap two elements in an array
-    public static void exchange(int arrayPositionOne, int arrayPositionTwo, String[] Array){
-        String temp = Array[arrayPositionOne];
+    public static void exchange(int arrayPositionOne, int arrayPositionTwo, Data[] Array){
+        Data temp = Array[arrayPositionOne];
         Array[arrayPositionOne] = Array[arrayPositionTwo];
         Array[arrayPositionTwo] = temp;
     }
