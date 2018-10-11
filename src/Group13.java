@@ -4,11 +4,7 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Scanner;
-import java.util.List;
+import java.util.*;
 
 public class Group13 {
 
@@ -16,6 +12,8 @@ public class Group13 {
     // java Group13 ../data0.txt ../out0.txt
 
     public static void main(String[] args) throws InterruptedException, FileNotFoundException,IOException {
+        Data.testM_LRMUS();
+
         if (args.length < 2) {
             System.out.println("Please run with two command line arguments: input and output file names");
             System.exit(0);
@@ -37,7 +35,7 @@ public class Group13 {
 
         long start = System.currentTimeMillis();
 
-        quicksort(toSortData, 0, toSort.length -1);
+        quicksort(toSortData, 0, toSort.length -1, new M_LRMUSComparator());
 
         long end = System.currentTimeMillis();
 
@@ -49,11 +47,20 @@ public class Group13 {
     // Attempted quicksort implementation
     // Current issue is sorts but only line by line. Does not consider the LRMUS
 
-    public static void quicksort(Data[] quickArray, int start, int end){
+    public static void quicksort(Data[] quickArray, int start, int end, Comparator c){
+
+        if (c == null) {
+            if (start < end){
+                int q = partition(quickArray, start, end);
+                quicksort(quickArray, start, q-1, c);
+                quicksort(quickArray, q+1, end, c);
+            }
+        }
+
         if (start < end){
             int q = partition(quickArray, start, end);
-            quicksort(quickArray, start, q-1);
-            quicksort(quickArray, q+1, end);
+            quicksort(quickArray, start, q-1, c);
+            quicksort(quickArray, q+1, end, c);
         }
     }
 
