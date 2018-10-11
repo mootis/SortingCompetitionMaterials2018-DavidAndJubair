@@ -12,7 +12,7 @@ public class Group13 {
     // java Group13 ../data0.txt ../out0.txt
 
     public static void main(String[] args) throws InterruptedException, FileNotFoundException,IOException {
-        Data.testM_LRMUS();
+        // Data.testM_LRMUS();
 
         if (args.length < 2) {
             System.out.println("Please run with two command line arguments: input and output file names");
@@ -39,7 +39,7 @@ public class Group13 {
 
         long end = System.currentTimeMillis();
 
-        System.out.println(end - start + " ms");
+        System.out.println(end - start);
         writeOutResult(toSortData, outFileName);
 
     }
