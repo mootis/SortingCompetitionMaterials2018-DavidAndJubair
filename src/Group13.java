@@ -34,10 +34,13 @@ public class Group13 {
 
         Thread.sleep(10); //to let other things finish before timing; adds stability of runs
 
+        Data[] sorted = new Data[toSort.length];
         long start = System.currentTimeMillis();
 
+        sorted = sort(toSort);
         // This line is causing a ArrayIndexOutOfBoundsException of 10000
-        Data[] sorted = quicksort(toSort, 0, toSort.length-1);
+        // Data[] sorted = quicksort(toSort, 0, toSort.length-1);
+        //quicksort(toSort, 0, toSort.length -1);
 
         long end = System.currentTimeMillis();
 
@@ -46,13 +49,31 @@ public class Group13 {
 
     }
 
-    public static Data[] quicksort(String[] quickArray, int start, int end){
+    private static Data[] sort(String[] toSort) {
+        Data[] toSortData = new Data[toSort.length];
+        //System.out.print("\tBeginning Initialization...");
+        for (int i = 0; i < toSort.length; ++i) {
+            toSortData[i] = new Data(toSort[i]);
+        }
+        //System.out.println("done!");
+        Arrays.sort(toSortData, new M_LRMUSComparator());
+        return toSortData;
+    }
+
+    // Attempted quicksort implementation
+    // Ran into issue with either
+        // A - returning a data[] in a meaningful way
+        // B - returning void and having main deal with writeOutResult correctly
+            // Tried to modify writeOutResult to be able to take in a String[] rather than a Data[] to get around this
+            // Tried working upstream in main and functions used in sorting to accept Data[] instead of String[] but could not find a solution
+
+    public static void quicksort(String[] quickArray, int start, int end){
         if (start < end){
             int q = partition(quickArray, start, end);
             quicksort(quickArray, start, q-1);
             quicksort(quickArray, q+1, end);
         }
-        return null;
+        //return null;
         //return quicksort(quickArray, start, end);
     }
 
